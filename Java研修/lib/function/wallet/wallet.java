@@ -1,131 +1,80 @@
 package lib.function.wallet;
 
 import java.util.*;
+import static lib.constants.Constants.*;
 import lib.function.currency.Currency;
-import lib.function.currency.OneYen;
-import lib.function.currency.TenYen;
-import lib.function.currency.OneHundredYen;
-import lib.function.currency.OneThousandYen;
-import lib.function.currency.FiveThousandYen;
-import lib.function.currency.TenThousandYen;
 
-
-
+/**
+ * 財布処理クラス
+ */
 public class Wallet {
-
+    
+    /**
+     * 通貨クラス配列
+     */
     private List<Currency> currencyList;
 
-    // コンストラクタ
-    // 配列をインスタンス生成
+    /**
+     * コンストラクタ
+     * 通貨クラス配列をインスタンス生成
+     */
     public Wallet() {
         this.currencyList = new ArrayList<Currency>();
     }
 
-
-    // getter?
+    /**
+     * Currencyリストgetter
+     */
     public List<Currency> getCurrencyList() {
         return this.currencyList;
     }
     
-    // setter?
-    public void setCurrencyList(List<Currency> currencyList) {
-        this.currencyList = currencyList;
+    /**
+     * Currencyリストsetter
+     * @param currencyType 通貨種類
+     * @param howMany 数量
+     */
+    public void setCurrencyList(int currencyType, int howMany) {
+        this.currencyList.add(new Currency(currencyType, howMany));
     }
 
+    /**
+     * 判定＆入金処理
+     * @param splitIntList 整数値リスト
+     */
+    public void payment(List<List<Integer>> splitIntList) {
 
-    // 文字分割処理
-    public void splitText(String inputText) {
+        for (List<Integer> commaSplitText : splitIntList) {
 
-        String[] firstSplitList = inputText.split(",");
+                Integer currencyType = 0;
+                Integer howMany = 0;
+                boolean turnFlag = true;
 
-        for (String firstSplitText : firstSplitList) {
+            for (Integer intdisp : commaSplitText) {
 
-            String[] secondSplitList = firstSplitText.split(" ");
-            int convert = 0;
-            int first = 0;
-            int second = 0;
-            boolean turnFlag = true;
-
-            for (String secondSplitText : secondSplitList) { 
-
-                convert = Integer.parseInt(secondSplitText);
-
-                if (turnFlag) {
-                    first = convert;
-                    turnFlag = false;
-                } else {
-                    second = convert;
-                    if(first > 0 && second > 0) {
-                        payment(first, second);
+                    if (turnFlag) {
+                        currencyType = intdisp;
+                        turnFlag = false;
+                    } else {
+                        howMany = intdisp;
+                        turnFlag = true;
                     }
-                    turnFlag = true;
-                }
+            }
+
+            if (currencyType == oneYen || currencyType == tenYen || currencyType == oneHundredYen || currencyType == oneThousandYen || currencyType == fiveThousandYen || currencyType == tenThousandYen) {
+                setCurrencyList(currencyType, howMany);
+            } else {
+                // 存在しない通貨の場合
+                System.out.println(currencyType + "は存在しない通貨/紙幣です");
             }
         }
     }
 
-
-    // 判定＆入金処理
-    private void payment(int currencyType, int quantity) {
-
-        switch (currencyType) {
-            // 入金
-
-            case 1:
-                for (int i = 0; i < quantity; i++) {
-                    this.currencyList.add(new OneYen());
-                }
-                displayAmount(currencyType, quantity);
-            break;
-
-            case 10:
-                for (int i = 0; i < quantity; i++) {
-                    this.currencyList.add(new TenYen());
-                }
-                displayAmount(currencyType, quantity);
-            break;
-
-            case 100:
-                for (int i = 0; i < quantity; i++) {
-                    this.currencyList.add(new OneHundredYen());
-                }
-                displayAmount(currencyType, quantity);
-            break;
-
-            case 1000:
-                for (int i = 0; i < quantity; i++) {
-                    this.currencyList.add(new OneThousandYen());
-                }
-                displayAmount(currencyType, quantity);
-            break;
-
-            case 5000:
-                for (int i = 0; i < quantity; i++) {
-                    this.currencyList.add(new FiveThousandYen());
-                }
-                displayAmount(currencyType, quantity);
-            break;
-
-            case 10000:
-                for (int i = 0; i < quantity; i++) {
-                    this.currencyList.add(new TenThousandYen());
-                }
-                displayAmount(currencyType, quantity);
-            break;
-
-            default:
-                // 存在しない通貨の場合
-                String unknownCurrency = Integer.toString(currencyType);
-
-                System.out.println(unknownCurrency + "は存在しない通貨です");
-            break;
-        }
+    /**
+     * 残高確認処理
+     */
+    public void checkBalance() {
+        List<Currency> checkCurrencyList = getCurrencyList();
+        // TODO:残高確認処理
     }
-
-    //
-    private void displayAmount(int currencyType, int quantity) {
-        int amount = currencyType*quantity;
-        System.out.println(String.format("%,d", amount) + "円入金しました");
-    }
-
 }
