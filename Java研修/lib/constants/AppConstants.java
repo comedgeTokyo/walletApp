@@ -5,9 +5,8 @@ package lib.constants;
  */
 public class AppConstants {
 
-    /**
-     * コンストラクタ
-     */
+
+    // コンストラクタ
     private AppConstants() {
     }
 
@@ -34,12 +33,12 @@ public class AppConstants {
     /**
      * 肖像確認
      */
-    public static final int CMD_CHECK_PATTERN = 5;
+    public static final int CMD_CHECK_PORTRAIT = 5;
     
     /**
      * 図柄確認
      */
-    public static final int CMD_CHECK_PORTRAIT = 6;
+    public static final int CMD_CHECK_DESIGN = 6;
 
 
 

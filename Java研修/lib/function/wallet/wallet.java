@@ -2,6 +2,13 @@ package lib.function.wallet;
 
 import java.util.*;
 import lib.function.currency.Currency;
+import lib.function.currency.CurrencyAgm;
+import lib.function.currency.OneHundredYen;
+import lib.function.currency.OneThousandYen;
+import lib.function.currency.OneYen;
+import lib.function.currency.TenThousandYen;
+import lib.function.currency.TenYen;
+
 import static lib.constants.AppConstants.*;
 
 /**
@@ -14,9 +21,7 @@ public class Wallet {
      */
     private List<Currency> currencyList;
 
-    /**
-     * コンストラクタ
-     */
+    // コンストラクタ
     public Wallet() {
         this.currencyList = new ArrayList<Currency>();
     }
@@ -33,39 +38,55 @@ public class Wallet {
      * @param currencyType 通貨種類
      * @param howMany 数量
      */
-    public void setCurrencyList(int currencyType, int howMany) {
-        this.currencyList.add(new Currency(currencyType, howMany));
+    public void setCurrencyList(int currencyType, int howMany, int portrait) {
+
+        List<Currency> now = getCurrencyList();
+
+        switch (currencyType) {
+            case CURRENCY_ONE_YEN:
+                if (now.contains(Currency)) {
+
+                }
+                this.currencyList.add(new OneYen(0, howMany, portrait));
+                break;
+
+            case CURRENCY_TEN_YEN:
+                this.currencyList.add(new TenYen(0, howMany, portrait));
+                break;
+
+            case CURRENCY_ONEHUNDRED_YEN:
+                this.currencyList.add(new OneHundredYen(0, howMany, portrait));
+                break;
+
+            case CURRENCY_ONETHOUSAND_YEN:
+                this.currencyList.add(new OneThousandYen(1, howMany, portrait));
+                break;
+
+            case CURRENCY_FIVETHOUSAND_YEN:
+                this.currencyList.add(new FiveThousandYen(1, howMany, portrait));
+                break;
+
+            case CURRENCY_TENTHOUSAND_YEN:
+                this.currencyList.add(new TenThousandYen(1, howMany, portrait));
+                break;
+        
+            default:
+                break;
+        }
     }
 
     /**
      * 判定＆入金処理
      * @param splitIntList 整数値リスト
      */
-    public void payment(List<List<Integer>> splitIntList) {
+    public void payment(List<CurrencyAgm> splitIntList) {
 
-        for (List<Integer> commaSplitText : splitIntList) {
+        for (CurrencyAgm commaSplitText : splitIntList) {
+            int currencyType = commaSplitText.getCurrencyType();
+            int howMany = commaSplitText.gethowMany();
+            int portrait = commaSplitText.getportrait();
 
-                Integer currencyType = 0;
-                Integer howMany = 0;
-                boolean turnFlag = true;
-
-            for (Integer intdisp : commaSplitText) {
-
-                    if (turnFlag) {
-                        currencyType = intdisp;
-                        turnFlag = false;
-                    } else {
-                        howMany = intdisp;
-                        turnFlag = true;
-                    }
-            }
-
-            if (currencyType == CURRENCY_ONE_YEN || currencyType == CURRENCY_TEN_YEN || currencyType == CURRENCY_ONEHUNDRED_YEN || currencyType == CURRENCY_ONETHOUSAND_YEN || currencyType == CURRENCY_FIVETHOUSAND_YEN || currencyType == CURRENCY_TENTHOUSAND_YEN) {
-                setCurrencyList(currencyType, howMany);
-            } else {
-                // 存在しない通貨の場合
-                System.out.println(currencyType + "は存在しない通貨/紙幣です");
-            }
+            setCurrencyList(currencyType, howMany, portrait);
         }
     }
 

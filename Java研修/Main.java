@@ -43,7 +43,7 @@ class Main {
 
                             splitTextlist = splitText(amountText);
                             
-                            wallet.payment(splitTextlist);
+                            currencyAgmfunc(splitTextlist);
                         } else {
                             System.out.println("入力を確認できませんでした");
                         }
@@ -66,12 +66,12 @@ class Main {
                         System.out.println("通貨種類を確認する通貨を指定してください");
                         break;
                                  
-                    case CMD_CHECK_PATTERN:
+                    case CMD_CHECK_PORTRAIT:
                         // TODO:肖像確認処理
                         System.out.println("肖像を確認する通貨を指定してください");
                         break;
 
-                    case CMD_CHECK_PORTRAIT:
+                    case CMD_CHECK_DESIGN:
                         // TODO:図柄確認処理
                         System.out.println("図柄を確認する通貨を指定してください");
                         break;
@@ -82,7 +82,6 @@ class Main {
                         System.out.println("無効なコマンドです");
                         break;
                 }
-            
             }
         }
     }

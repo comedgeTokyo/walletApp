@@ -15,12 +15,25 @@ public class Currency {
     protected int howMany;
 
     /**
-     * コンストラクタ
+     * 肖像
      */
-    public Currency(int currencyType, int howMany) {
-        // 金額
+    protected int portrait;
+
+    /**
+     * 図柄
+     */
+    protected int design;
+
+    // コンストラクタ
+    public Currency(int currencyType, int howMany, int portrait) {
+        // 通貨種類
         this.currencyType = currencyType;
-        // 枚数
+
+        // 数量
         this.howMany = howMany;
+
+        // 肖像
+        this.portrait = portrait;
     }
+
 }
