@@ -1,8 +1,8 @@
 package lib.function.wallet;
 
 import java.util.*;
-import static lib.constants.Constants.*;
 import lib.function.currency.Currency;
+import static lib.constants.AppConstants.*;
 
 /**
  * 財布処理クラス
@@ -16,7 +16,6 @@ public class Wallet {
 
     /**
      * コンストラクタ
-     * 通貨クラス配列をインスタンス生成
      */
     public Wallet() {
         this.currencyList = new ArrayList<Currency>();
@@ -61,7 +60,7 @@ public class Wallet {
                     }
             }
 
-            if (currencyType == oneYen || currencyType == tenYen || currencyType == oneHundredYen || currencyType == oneThousandYen || currencyType == fiveThousandYen || currencyType == tenThousandYen) {
+            if (currencyType == CURRENCY_ONE_YEN || currencyType == CURRENCY_TEN_YEN || currencyType == CURRENCY_ONEHUNDRED_YEN || currencyType == CURRENCY_ONETHOUSAND_YEN || currencyType == CURRENCY_FIVETHOUSAND_YEN || currencyType == CURRENCY_TENTHOUSAND_YEN) {
                 setCurrencyList(currencyType, howMany);
             } else {
                 // 存在しない通貨の場合
