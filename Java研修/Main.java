@@ -1,21 +1,22 @@
 import java.util.*;
 import static lib.constants.AppConstants.*;
-import static lib.function.wallet.SplitText.*;
+import static lib.function.wallet.Conversion.*;
+import lib.function.currency.CurrencyAgm;
 import lib.function.wallet.Wallet;
+
 /**
  * @author sunaga
  * @version 1.0
  */
-
 class Main {
     public static void main(String[] args) {
-        mainFunc();
+        mainfunc();
     }
     
     /**
      * mainFuncメソッド
      */
-    public static void mainFunc() {
+    public static void mainfunc() {
 
         // Walletインスタンス生成
         Wallet wallet = new Wallet();
@@ -32,18 +33,27 @@ class Main {
                 // コマンドの値で処理を実行
                 switch (command) {
 
+                    // 入金
                     case CMD_DEPOSIT:
+
                         System.out.println("入金する通貨を指定してください");
                     
                         Scanner scannerAmount = new Scanner(System.in);
-                        String amountText = scannerAmount.nextLine();
-                        List<List<Integer>> splitTextlist;
 
+                        String amountText = scannerAmount.nextLine();
+
+                        // TODO:入力値を判定する処理を作成
                         if (amountText != ""){
 
-                            splitTextlist = splitText(amountText);
+                            // 整数型のリストに変換
+                            List<List<Integer>> splitTextlist = splitTextConvert(amountText);
                             
-                            currencyAgmfunc(splitTextlist);
+                            // 通貨情報用クラスに変換
+                            List<CurrencyAgm> currencyAgmfunc = currencyAgmConvert(splitTextlist);
+
+                            // 入金処理
+                            wallet.payment(currencyAgmfunc);
+
                         } else {
                             System.out.println("入力を確認できませんでした");
                         }
@@ -58,7 +68,9 @@ class Main {
 
                     case CMD_CHECK_BALANCE:
                         // TODO:現在の財布の内容を表示させる
-                        System.out.println("残高");
+
+                        // 現在のCurrencyリスト内の情報を表示させる(テスト用)
+                        wallet.checkBalance();
                         break;
                 
                     case CMD_CHECK_CURRENCYTYPE:

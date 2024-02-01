@@ -3,6 +3,6 @@ package lib.commons;
 /**
  * 共通処理クラス
  */
-public class Commonfunc {
-    
+public class CommonFunc {
+
 }

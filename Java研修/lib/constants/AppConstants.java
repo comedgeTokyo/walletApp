@@ -5,7 +5,6 @@ package lib.constants;
  */
 public class AppConstants {
 
-
     // コンストラクタ
     private AppConstants() {
     }

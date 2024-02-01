@@ -3,7 +3,8 @@ package lib.function.currency;
 /**
  * 通貨クラス
  */
-public class Currency {
+public abstract class Currency {
+    
     /**
      * 通貨種類
      */
@@ -24,16 +25,20 @@ public class Currency {
      */
     protected int design;
 
-    // コンストラクタ
-    public Currency(int currencyType, int howMany, int portrait) {
-        // 通貨種類
-        this.currencyType = currencyType;
 
-        // 数量
-        this.howMany = howMany;
-
-        // 肖像
-        this.portrait = portrait;
+    public int getCurrencyType() {
+        return this.currencyType;
     }
 
+    public int gethowMany() {
+        return this.howMany;
+    }
+
+    public int getportrait() {
+        return this.portrait;
+    }
+
+    public int getdesign() {
+        return this.design;
+    } 
 }

@@ -1,19 +1,17 @@
 package lib.function.currency;
 
-import java.util.List;
-
 /**
- * 通貨情報クラス
+ * 通貨情報保持クラス
  */
 public class CurrencyAgm {
     
     /**
-     * 通貨種類
+     * 金額の種類
      */
-    private int currencyType;
+    private int amount;
 
     /**
-     * 数量
+     * 枚数
      */
     private int howMany;
 
@@ -23,11 +21,11 @@ public class CurrencyAgm {
     private int portrait;
 
     // コンストラクタ
-    public CurrencyAgm(int currencyType, int howMany, int portrait) {
-        // 通貨種類
-        this.currencyType = currencyType;
+    public CurrencyAgm(int amount, int howMany, int portrait) {
+        // 金額の種類
+        this.amount = amount;
 
-        // 数量
+        // 枚数
         this.howMany = howMany;
 
         // 肖像
@@ -35,21 +33,21 @@ public class CurrencyAgm {
     }
 
     /**
-     * getter
+     * 金額の種類getter
      */
     public int getCurrencyType() {
-        return this.currencyType;
+        return this.amount;
     }
 
     /**
-     * getter
+     * 枚数getter
      */
     public int gethowMany() {
         return this.howMany;
     }
 
     /**
-     * getter
+     * 肖像getter
      */
     public int getportrait() {
         return this.portrait;
