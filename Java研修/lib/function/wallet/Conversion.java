@@ -2,19 +2,20 @@ package lib.function.wallet;
 
 import java.util.*;
 import static lib.constants.AppConstants.*;
-import lib.function.currency.CurrencyAgm;
 import lib.function.currency.Currency;
 
 /**
  * 変換処理クラス
  */
 public class Conversion {
-    
+
+    // TODO:入金処理以外でも使うのであればCommonFuncにする
     /**
      * splitTextメソッド
      * 文字列を","で分割し、その文字列を" "で分割した文字列を整数値に変換しリストに詰める処理
-     * @param inputText 文字列
-     * @return 金額と枚数がセットの整数リストのリスト
+     * 戻り値の例：[[1000,20],[5000,7],[10000,2]]
+     * @param inputText {String}
+     * @return 整数リストのリスト
      */
     public static List<List<Integer>> splitTextConvert(String inputText) {
 
@@ -35,15 +36,15 @@ public class Conversion {
             // intのリスト 例[1000,90]
             List<Integer> intList = new ArrayList<Integer>();
 
-            //配列を一つずつ文字列から数値へ変換する
+            // リスト内の文字列を一つずつ数値へ変換する
             for (int i=0; i<spaceSplitListLen; i++) {
                 intList.add(Integer.parseInt(spaceSplitList[i]));
             }
 
-            // intリストの長さ
+            // intリストの長さ取得
             int intListLen = intList.size();
 
-            // リストの長さが種類と枚数のセットであれば
+            // リストの長さが"2"つまり種類と枚数のセットであれば追加する
             if (intListLen == 2) {
                 resultList.add(intList);
             }
@@ -52,93 +53,9 @@ public class Conversion {
     }
 
 
-    /**
-     * 整数のリストをCurrencyAgmクラスに変換する処理
-     * @param intList 金額と枚数がセットの整数リストのリスト
-     * @return 通貨情報のリスト
-     */
-    public static List<CurrencyAgm> currencyAgmConvert(List<List<Integer>> intList) {
-
-        List<CurrencyAgm> resuList = new ArrayList<CurrencyAgm>();
-        
-        for (List<Integer> commaSplitText : intList) {
-
-            // 通貨の金額
-            int amount = commaSplitText.get(0);
-
-            // 枚数
-            int howMany = commaSplitText.get(1);
-
-            // 肖像
-            int portrait = 0;
-
-            switch (amount) {
-                case CURRENCY_ONE_YEN:
-                    resuList.add(new CurrencyAgm(amount, howMany, portrait));
-                    break;
-
-                case CURRENCY_TEN_YEN:
-                    resuList.add(new CurrencyAgm(amount, howMany, portrait));
-                    break;
-
-                case CURRENCY_ONEHUNDRED_YEN:
-                    resuList.add(new CurrencyAgm(amount, howMany, portrait));
-                    break;
-
-                case CURRENCY_ONETHOUSAND_YEN:
-
-                    Scanner scanner = new Scanner(System.in);
-
-                    System.out.println("千円の肖像を選択してください");
-                    System.out.println("1. 野口英世 2. 北里柴三郎");
-
-                    portrait = scanner.nextInt();
-
-                    // TODO:1,2以外の場合は再度入力させたい
-                    if (portrait == 1 || portrait == 2) {
-                        resuList.add(new CurrencyAgm(amount, howMany, portrait));
-                    }
-                    break;
-
-                case CURRENCY_FIVETHOUSAND_YEN:
-
-                    Scanner scanner1 = new Scanner(System.in);
-
-                    System.out.println("五千円の肖像を選択してください");
-                    System.out.println("1. 樋口一葉 2. 津田梅子");
-
-                    portrait = scanner1.nextInt();
-
-                    // TODO:1,2以外の場合は再度入力させたい
-                    if (portrait == 1 || portrait == 2) {
-                        resuList.add(new CurrencyAgm(amount, howMany, portrait));
-                    }
-                    break;
-
-                case CURRENCY_TENTHOUSAND_YEN:
-
-                    Scanner scanner2 = new Scanner(System.in);
-
-                    System.out.println("壱万円の肖像を選択してください");
-                    System.out.println("1. 福沢諭吉 2. 渋沢栄一");
-
-                    portrait = scanner2.nextInt();
-
-                    // TODO:1,2以外の場合は再度入力させたい
-                    if (portrait == 1 || portrait == 2) {
-                        resuList.add(new CurrencyAgm(amount, howMany, portrait));
-                    }
-                    break;
-            
-                default:
-                    System.out.println(amount + "円は存在しない通貨な為、入金できませんでした");
-                    break;
-            }
-
-        }
-        return resuList;
-    }
-
+    // ==============================================================================
+    // 現在使用していないメソッド
+    // getterでインスタンスのプロパティ(金額、肖像)を取得して判別する予定なので使わない
 
     /**
      * クラス名を返す処理
@@ -173,19 +90,19 @@ public class Conversion {
                 break;
 
             case "OneHundredYen":
-                resultInt = CURRENCY_ONEHUNDRED_YEN;
+                resultInt = CURRENCY_ONE_HUNDRED_YEN;
                 break;
 
             case "OneThousandYen":
-                resultInt = CURRENCY_ONETHOUSAND_YEN;
+                resultInt = CURRENCY_ONE_THOUSAND_YEN;
                 break;
 
             case "FiveThousandYen":
-                resultInt = CURRENCY_FIVETHOUSAND_YEN;
+                resultInt = CURRENCY_FIVE_THOUSAND_YEN;
                 break;
 
             case "TenThousandYen":
-                resultInt = CURRENCY_TENTHOUSAND_YEN;
+                resultInt = CURRENCY_TEN_THOUSAND_YEN;
                 break;
         
             default:

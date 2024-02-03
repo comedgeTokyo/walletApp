@@ -3,15 +3,15 @@ package lib.function.currency;
 import static lib.constants.AppConstants.*;
 
 /**
- * 10円クラス
+ * 50円クラス
  */
-public class TenYen extends Currency {
+public class FiftyYen extends Currency {
 
     // コンストラクタ
-    public TenYen(int howMany, int portrait) {
+    public FiftyYen(int howMany, int portrait) {
 
         // 通貨金額
-        this.amount = CURRENCY_TEN_YEN;
+        this.amount = CURRENCY_FIFTY_YEN;
 
         // 通貨種類
         this.currencyType = CURRENCY_TYPE_COIN;

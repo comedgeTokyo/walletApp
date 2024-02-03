@@ -3,18 +3,18 @@ package lib.function.currency;
 import static lib.constants.AppConstants.*;
 
 /**
- * 10円クラス
+ * 2000円クラス
  */
-public class TenYen extends Currency {
+public class TwoThousandYen extends Currency {
 
     // コンストラクタ
-    public TenYen(int howMany, int portrait) {
+    public TwoThousandYen(int howMany, int portrait) {
 
         // 通貨金額
-        this.amount = CURRENCY_TEN_YEN;
+        this.amount = CURRENCY_TWO_THOUSAND_YEN;
 
         // 通貨種類
-        this.currencyType = CURRENCY_TYPE_COIN;
+        this.currencyType = CURRENCY_TYPE_BILL;
 
         // 枚数
         this.howMany = howMany;
@@ -23,7 +23,7 @@ public class TenYen extends Currency {
         this.portrait = portrait;
 
         // 図柄
-        this.design = 0;
+        this.design = portrait;
     }
 
     /**
@@ -53,11 +53,12 @@ public class TenYen extends Currency {
     public int getportrait() {
         return this.portrait;
     }
-    
+
     /**
      * 図柄getter
      */
     public int getdesign() {
         return this.design;
-    }
+    } 
+    
 }

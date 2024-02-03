@@ -2,15 +2,21 @@ package lib.function.wallet;
 
 import java.util.*;
 import static lib.constants.AppConstants.*;
+import static lib.function.wallet.PutMoney.*;
 import static lib.function.wallet.Conversion.*;
-import lib.function.currency.CurrencyAgm;
+
+import lib.function.currency.CurrencyInfo;
+import lib.function.currency.FiftyYen;
+import lib.function.currency.FiveHundredYen;
 import lib.function.currency.Currency;
 import lib.function.currency.FiveThousandYen;
+import lib.function.currency.FiveYen;
 import lib.function.currency.OneHundredYen;
 import lib.function.currency.OneThousandYen;
 import lib.function.currency.OneYen;
 import lib.function.currency.TenThousandYen;
 import lib.function.currency.TenYen;
+import lib.function.currency.TwoThousandYen;
 
 /**
  * 財布処理クラス
@@ -43,66 +49,81 @@ public class Wallet {
     }
 
 
+
+
     /**
      * 入金処理
-     * @param splitIntList 通貨情報クラスリスト
      */
-    public void payment(List<CurrencyAgm> splitIntList) {
+    public void putMoney(String inputText) {
+        // 整数型のリストに変換
+        List<List<Integer>> splitIntlist = splitTextConvert(inputText);
 
-        for (CurrencyAgm commaSplitText : splitIntList) {
+        // 通貨情報用クラスに変換
+        List<CurrencyInfo> currencyInfoList = currencyAgmConvert(splitIntlist);
 
-            // 通貨の種類を取得(10円,1000円等)
-            int amount = commaSplitText.getCurrencyType();
+        // 入金処理
+        for (CurrencyInfo commaSplitText : currencyInfoList) {
+
+            // 通貨の金額を取得
+            int amount = commaSplitText.getAmount();
 
             // 枚数を取得
             int howMany = commaSplitText.gethowMany();
 
-            // 図柄を取得
+            // 肖像を取得
             int portrait = commaSplitText.getportrait();
 
             // 通貨の情報によって分岐しインスタンス生成する
-            setNewCurrency(amount, howMany, portrait);
-        }
-    }
-
-    /**
-     * 通貨の金額によって分岐しインスタンス生成する処理
-     * @param amount 通貨の金額
-     * @param howMany 枚数
-     * @param portrait 肖像
-     */
-    public void setNewCurrency(int amount, int howMany, int portrait) {
-
-            // TODO:currencyTypeを数値で渡さない方法を考える
             switch (amount) {
                 case CURRENCY_ONE_YEN:
-                    setCurrencyList(new OneYen(0, howMany, portrait));
+                    setCurrencyList(new OneYen(howMany, portrait));
+                    break;
+
+                case CURRENCY_FIVE_YEN:
+                    setCurrencyList(new FiveYen(howMany, portrait));
                     break;
 
                 case CURRENCY_TEN_YEN:
-                    setCurrencyList(new TenYen(0, howMany, portrait));
+                    setCurrencyList(new TenYen(howMany, portrait));
                     break;
 
-                case CURRENCY_ONEHUNDRED_YEN:
-                    setCurrencyList(new OneHundredYen(0, howMany, portrait));
+                case CURRENCY_FIFTY_YEN:
+                    setCurrencyList(new FiftyYen(howMany, portrait));
                     break;
 
-                case CURRENCY_ONETHOUSAND_YEN:
-                    setCurrencyList(new OneThousandYen(1, howMany, portrait));
+                case CURRENCY_ONE_HUNDRED_YEN:
+                    setCurrencyList(new OneHundredYen(howMany, portrait));
                     break;
 
-                case CURRENCY_FIVETHOUSAND_YEN:
-                    setCurrencyList(new FiveThousandYen(1, howMany, portrait));
+                case CURRENCY_FIVE_HUNDRED_YEN:
+                    setCurrencyList(new FiveHundredYen(howMany, portrait));
                     break;
 
-                case CURRENCY_TENTHOUSAND_YEN:
-                    setCurrencyList(new TenThousandYen(1, howMany, portrait));
+                case CURRENCY_ONE_THOUSAND_YEN:
+                    setCurrencyList(new OneThousandYen(howMany, portrait));
+                    break;
+
+                case CURRENCY_TWO_THOUSAND_YEN:
+                    setCurrencyList(new TwoThousandYen(howMany, portrait));
+                    break;
+
+                case CURRENCY_FIVE_THOUSAND_YEN:
+                    setCurrencyList(new FiveThousandYen(howMany, portrait));
+                    break;
+
+                case CURRENCY_TEN_THOUSAND_YEN:
+                    setCurrencyList(new TenThousandYen(howMany, portrait));
                     break;
             
                 default:
                     break;
             }
+        }
     }
+
+
+
+
 
     
     /**
@@ -114,13 +135,10 @@ public class Wallet {
         List<Currency> checkCurrencyList = getCurrencyList();
 
         for (Currency currencydata : checkCurrencyList) {
-            
-            // クラス名を取得
-            String className = returnCurrencyName(currencydata);
-            
-            // クラス名から通貨の金額を取得
-            int amount = returnCurrencyNumber(className);
-            
+
+            // 通貨の金額を取得
+            Integer amount = currencydata.getAmount();
+
             // 通貨種類を取得(硬貨or紙幣)
             Integer currencyType = currencydata.getCurrencyType();
 
@@ -134,7 +152,7 @@ public class Wallet {
             Integer design = currencydata.getdesign();
 
             // 確認用
-            System.out.println(amount + "円の情報 " + "currencyType : " + currencyType + ", howMany : " + howMany + ", portrait : " + portrait + ", design : " + design);
+            System.out.println("amount : " + amount  + ", currencyType : " + currencyType + ", howMany : " + howMany + ", portrait : " + portrait + ", design : " + design);
         }
     }
 }

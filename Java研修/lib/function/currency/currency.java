@@ -4,7 +4,12 @@ package lib.function.currency;
  * 通貨クラス
  */
 public abstract class Currency {
-    
+
+    /**
+     * 通貨金額
+     */
+    protected int amount;
+
     /**
      * 通貨種類
      */
@@ -25,6 +30,9 @@ public abstract class Currency {
      */
     protected int design;
 
+    public int getAmount() {
+        return this.amount;
+    }
 
     public int getCurrencyType() {
         return this.currencyType;
