@@ -59,21 +59,21 @@ public class Wallet {
         List<List<Integer>> splitIntlist = splitTextConvert(inputText);
 
         // 通貨情報用クラスに変換
-        List<CurrencyInfo> currencyInfoList = currencyAgmConvert(splitIntlist);
+        List<CurrencyInfo> currencyInfoList = currencyConvert(splitIntlist);
 
         // 入金処理
-        for (CurrencyInfo commaSplitText : currencyInfoList) {
+        for (CurrencyInfo currentCurrencyInfo : currencyInfoList) {
 
             // 通貨の金額を取得
-            int amount = commaSplitText.getAmount();
+            int amount = currentCurrencyInfo.getAmount();
 
             // 枚数を取得
-            int howMany = commaSplitText.gethowMany();
+            int howMany = currentCurrencyInfo.gethowMany();
 
             // 肖像を取得
-            int portrait = commaSplitText.getportrait();
+            int portrait = currentCurrencyInfo.getportrait();
 
-            // 通貨の情報によって分岐しインスタンス生成する
+            // 通貨の金額によって分岐しインスタンス生成する
             switch (amount) {
                 case CURRENCY_ONE_YEN:
                     setCurrencyList(new OneYen(howMany, portrait));

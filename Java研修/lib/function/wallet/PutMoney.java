@@ -17,7 +17,7 @@ public class PutMoney {
      * @param intList 金額と枚数がセットの整数リストのリスト
      * @return 通貨情報のリスト
      */
-    public static List<CurrencyInfo> currencyAgmConvert(List<List<Integer>> intListList) {
+    public static List<CurrencyInfo> currencyConvert(List<List<Integer>> intListList) {
 
         List<CurrencyInfo> resultList = new ArrayList<CurrencyInfo>();
         
