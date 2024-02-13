@@ -17,7 +17,7 @@ public class PutMoney {
      * @param intList 金額と枚数がセットの整数リストのリスト
      * @return 通貨情報のリスト
      */
-    public static List<CurrencyInfo> currencyConvert(List<List<Integer>> intListList) {
+    public static List<CurrencyInfo> currencyConvert(List<List<Integer>> intListList, int check) {
 
         List<CurrencyInfo> resultList = new ArrayList<CurrencyInfo>();
         
@@ -30,33 +30,41 @@ public class PutMoney {
             int howMany = intList.get(1);
 
             // 肖像
-            int portrait = -1;
+            int portrait = CURRENCY_PORTRAIT_NONE;
+
+            // 図柄
+            int design = CURRENCY_DESIGN_DEFAULT;
+
+            // 残高確認用
+            if (check == 1) {
+                resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
+            }
 
             // 枚数が0以下であればリストに追加しない
-            if (howMany > 0) {
+            if (check == 0 && howMany > 0) {
                 switch (amount) {
                     case CURRENCY_ONE_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
                         break;
     
                     case CURRENCY_FIVE_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
                         break;
     
                     case CURRENCY_TEN_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
                         break;
     
                     case CURRENCY_FIFTY_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
                         break;
     
                     case CURRENCY_ONE_HUNDRED_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
                         break;
     
                     case CURRENCY_FIVE_HUNDRED_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, design));
                         break;
     
                     case CURRENCY_ONE_THOUSAND_YEN:
@@ -70,12 +78,13 @@ public class PutMoney {
     
                         // TODO:1,2以外の場合は再度入力させたい
                         if (portrait == 1 || portrait == 2) {
-                            resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                            resultList.add(new CurrencyInfo(amount, howMany, portrait, portrait));
                         }
                         break;
     
                     case CURRENCY_TWO_THOUSAND_YEN:
-                        resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                        portrait = 1;
+                        resultList.add(new CurrencyInfo(amount, howMany, portrait, portrait));
                         break;
     
                     case CURRENCY_FIVE_THOUSAND_YEN:
@@ -89,7 +98,7 @@ public class PutMoney {
     
                         // TODO:1,2以外の場合は再度入力させたい
                         if (portrait == 1 || portrait == 2) {
-                            resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                            resultList.add(new CurrencyInfo(amount, howMany, portrait, portrait));
                         }
                         break;
     
@@ -104,7 +113,7 @@ public class PutMoney {
     
                         // TODO:1,2以外の場合は再度入力させたい
                         if (portrait == 1 || portrait == 2) {
-                            resultList.add(new CurrencyInfo(amount, howMany, portrait));
+                            resultList.add(new CurrencyInfo(amount, howMany, portrait, portrait));
                         }
                         break;
                 
@@ -112,8 +121,6 @@ public class PutMoney {
                         System.out.println(amount + "円は存在しない通貨な為、入金できません");
                         break;
                 }
-            } else {
-                System.out.println(amount + " " + howMany + "の入力では入金できません");
             }
         }
         return resultList;

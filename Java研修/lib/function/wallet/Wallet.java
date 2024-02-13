@@ -2,9 +2,9 @@ package lib.function.wallet;
 
 import java.util.*;
 import static lib.constants.AppConstants.*;
+import static lib.commons.CommonFunc.*;
 import static lib.function.wallet.PutMoney.*;
-import static lib.function.wallet.Conversion.*;
-
+import static lib.function.wallet.CheckBalance.*;
 import lib.function.currency.CurrencyInfo;
 import lib.function.currency.FiftyYen;
 import lib.function.currency.FiveHundredYen;
@@ -23,15 +23,15 @@ import lib.function.currency.TwoThousandYen;
  */
 public class Wallet {
     
+    public Wallet() {
+        this.currencyList = new ArrayList<Currency>();
+    }
+
     /**
      * 通貨クラス配列
      */
     private List<Currency> currencyList;
 
-    // コンストラクタ
-    public Wallet() {
-        this.currencyList = new ArrayList<Currency>();
-    }
 
     /**
      * Currencyリストgetter
@@ -49,8 +49,6 @@ public class Wallet {
     }
 
 
-
-
     /**
      * 入金処理
      */
@@ -59,7 +57,7 @@ public class Wallet {
         List<List<Integer>> splitIntlist = splitTextConvert(inputText);
 
         // 通貨情報用クラスに変換
-        List<CurrencyInfo> currencyInfoList = currencyConvert(splitIntlist);
+        List<CurrencyInfo> currencyInfoList = currencyConvert(splitIntlist,0);
 
         // 入金処理
         for (CurrencyInfo currentCurrencyInfo : currencyInfoList) {
@@ -68,91 +66,79 @@ public class Wallet {
             int amount = currentCurrencyInfo.getAmount();
 
             // 枚数を取得
-            int howMany = currentCurrencyInfo.gethowMany();
+            int howMany = currentCurrencyInfo.getHowMany();
 
             // 肖像を取得
-            int portrait = currentCurrencyInfo.getportrait();
+            int portrait = currentCurrencyInfo.getPortrait();
 
-            // 通貨の金額によって分岐しインスタンス生成する
-            switch (amount) {
-                case CURRENCY_ONE_YEN:
-                    setCurrencyList(new OneYen(howMany, portrait));
-                    break;
+            // デザインを取得
+            int design = currentCurrencyInfo.getDesign();
 
-                case CURRENCY_FIVE_YEN:
-                    setCurrencyList(new FiveYen(howMany, portrait));
-                    break;
+            boolean kaburinashi = true;
 
-                case CURRENCY_TEN_YEN:
-                    setCurrencyList(new TenYen(howMany, portrait));
-                    break;
 
-                case CURRENCY_FIFTY_YEN:
-                    setCurrencyList(new FiftyYen(howMany, portrait));
-                    break;
+            if (kaburinashi) {
+                    // 通貨の金額によって分岐しインスタンス生成する
+                    switch (amount) {
+                        case CURRENCY_ONE_YEN:
+                            setCurrencyList(new OneYen(howMany, portrait, design));
+                            break;
 
-                case CURRENCY_ONE_HUNDRED_YEN:
-                    setCurrencyList(new OneHundredYen(howMany, portrait));
-                    break;
+                        case CURRENCY_FIVE_YEN:
+                            setCurrencyList(new FiveYen(howMany, portrait, design));
+                            break;
 
-                case CURRENCY_FIVE_HUNDRED_YEN:
-                    setCurrencyList(new FiveHundredYen(howMany, portrait));
-                    break;
+                        case CURRENCY_TEN_YEN:
+                            setCurrencyList(new TenYen(howMany, portrait, design));
+                            break;
 
-                case CURRENCY_ONE_THOUSAND_YEN:
-                    setCurrencyList(new OneThousandYen(howMany, portrait));
-                    break;
+                        case CURRENCY_FIFTY_YEN:
+                            setCurrencyList(new FiftyYen(howMany, portrait, design));
+                            break;
 
-                case CURRENCY_TWO_THOUSAND_YEN:
-                    setCurrencyList(new TwoThousandYen(howMany, portrait));
-                    break;
+                        case CURRENCY_ONE_HUNDRED_YEN:
+                            setCurrencyList(new OneHundredYen(howMany, portrait, design));
+                            break;
 
-                case CURRENCY_FIVE_THOUSAND_YEN:
-                    setCurrencyList(new FiveThousandYen(howMany, portrait));
-                    break;
+                        case CURRENCY_FIVE_HUNDRED_YEN:
+                            setCurrencyList(new FiveHundredYen(howMany, portrait, design));
+                            break;
 
-                case CURRENCY_TEN_THOUSAND_YEN:
-                    setCurrencyList(new TenThousandYen(howMany, portrait));
-                    break;
-            
-                default:
-                    break;
+                        case CURRENCY_ONE_THOUSAND_YEN:
+                            setCurrencyList(new OneThousandYen(howMany, portrait, design));
+                            break;
+
+                        case CURRENCY_TWO_THOUSAND_YEN:
+                            setCurrencyList(new TwoThousandYen(howMany, portrait, design));
+                            break;
+
+                        case CURRENCY_FIVE_THOUSAND_YEN:
+                            setCurrencyList(new FiveThousandYen(howMany, portrait, design));
+                            break;
+
+                        case CURRENCY_TEN_THOUSAND_YEN:
+                            setCurrencyList(new TenThousandYen(howMany, portrait, design));
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
             }
         }
-    }
-
-
-
-
 
     
+        
     /**
-     * クラス内情報確認処理(確認用)
+     * 残高確認処理
      */
     public void checkBalance() {
 
         // 現在の通貨リストを取得
         List<Currency> checkCurrencyList = getCurrencyList();
-
-        for (Currency currencydata : checkCurrencyList) {
-
-            // 通貨の金額を取得
-            Integer amount = currencydata.getAmount();
-
-            // 通貨種類を取得(硬貨or紙幣)
-            Integer currencyType = currencydata.getCurrencyType();
-
-            // 枚数を取得
-            Integer howMany = currencydata.gethowMany();
-
-            // 肖像を取得
-            Integer portrait = currencydata.getportrait();
-            
-            // 図柄を取得
-            Integer design = currencydata.getdesign();
-
-            // 確認用
-            System.out.println("amount : " + amount  + ", currencyType : " + currencyType + ", howMany : " + howMany + ", portrait : " + portrait + ", design : " + design);
-        }
+        
+        // 残高表示処理呼び出し
+        displyBalance(checkCurrencyList);
+        
     }
 }

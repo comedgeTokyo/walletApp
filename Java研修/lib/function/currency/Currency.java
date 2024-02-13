@@ -5,6 +5,18 @@ package lib.function.currency;
  */
 public abstract class Currency {
 
+    public Currency(int howMany, int portrait, int design) {
+        // 枚数
+        this.howMany = howMany;
+
+        // 肖像
+        this.portrait = portrait;
+
+        // 図柄
+        this.design = design;
+    }
+
+
     /**
      * 通貨金額
      */
@@ -30,23 +42,46 @@ public abstract class Currency {
      */
     protected int design;
 
+
+    /**
+     * 金額getter
+     */
     public int getAmount() {
         return this.amount;
     }
 
+    /**
+     * 通貨種類getter
+     */
     public int getCurrencyType() {
         return this.currencyType;
     }
 
-    public int gethowMany() {
+    /**
+     * 枚数getter
+     */
+    public int getHowMany() {
         return this.howMany;
     }
 
-    public int getportrait() {
+    /**
+     * 肖像getter
+     */
+    public int getPortrait() {
         return this.portrait;
     }
-
-    public int getdesign() {
+    
+    /**
+     * 図柄getter
+     */
+    public int getDesign() {
         return this.design;
-    } 
+    }
+
+    /**
+     * 金額setter
+     */
+    public void setHowMany(int howMany) {
+        this.howMany = this.howMany + howMany;
+    }
 }
