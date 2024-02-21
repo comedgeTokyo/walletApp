@@ -16,7 +16,6 @@ class Main {
      */
     public static void mainfunc() {
 
-        // Walletインスタンス生成
         Wallet wallet = new Wallet();
         
         // try-with-resources
