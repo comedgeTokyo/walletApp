@@ -1,39 +1,41 @@
 package lib.constants;
 
+import static lib.constants.AppConstants.*;
+
     /**
-     * 通貨enum
+     * 通貨金額enum
      */
     public enum Amount {
 
         /** 1円 */
-        OneYen(1,"１"),
+        OneYen(CURRENCY_ONE_YEN, CURRENCY_NAME_ICHIEN),
 
         /** 5円 */
-        FiveYen(5,"５"),
+        FiveYen(CURRENCY_FIVE_YEN, CURRENCY_NAME_GOEN),
 
         /** 10円 */
-        TenYen(10,"１０"),
+        TenYen(CURRENCY_TEN_YEN, CURRENCY_NAME_JUUEN),
 
         /** 50円 */
-        FiftyYen(50,"５０"),
+        FiftyYen(CURRENCY_FIFTY_YEN, CURRENCY_NAME_GOJUUEN),
 
         /** 100円 */
-        OneHundredYen(100,"１００"),
+        OneHundredYen(CURRENCY_ONE_HUNDRED_YEN, CURRENCY_NAME_HYAKUEN),
 
         /** 500円 */
-        FiveHundredYen(500,"５００"),
+        FiveHundredYen(CURRENCY_FIVE_HUNDRED_YEN, CURRENCY_NAME_GOHYAKUEN),
 
         /** 1000円 */
-        OneThousandYen(1000,"千"),
+        OneThousandYen(CURRENCY_ONE_THOUSAND_YEN, CURRENCY_NAME_SENEN),
 
         /** 2000円 */
-        TwoThousandYen(2000,"二千"),
+        TwoThousandYen(CURRENCY_TWO_THOUSAND_YEN, CURRENCY_NAME_NISENEN),
 
         /** 5000円 */
-        FiveThousandYen(5000,"五千"),
+        FiveThousandYen(CURRENCY_FIVE_THOUSAND_YEN, CURRENCY_NAME_GOSENEN),
 
         /** 10000円 */
-        TenThousandYen(10000,"壱万");
+        TenThousandYen(CURRENCY_TEN_THOUSAND_YEN, CURRENCY_NAME_ICHIMANEN);
 
         private Amount(int amount, String amountName) {
             this.amount = amount;

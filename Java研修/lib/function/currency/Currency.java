@@ -1,52 +1,39 @@
 package lib.function.currency;
 
+import lib.constants.Amount;
+
 /**
  * 通貨クラス
  */
 public abstract class Currency {
 
     public Currency(int howMany, int portrait, int design) {
-        // 枚数
         this.howMany = howMany;
-
-        // 肖像
         this.portrait = portrait;
-
-        // 図柄
         this.design = design;
     }
 
 
-    /**
-     * 通貨金額
-     */
-    protected int amount;
+    /** 通貨金額 */
+    protected Amount amount;
 
-    /**
-     * 通貨種類
-     */
+    /** 通貨種類 */
     protected int currencyType;
 
-    /**
-     * 数量
-     */
+    /** 数量 */
     protected int howMany;
 
-    /**
-     * 肖像
-     */
+    /** 肖像 */
     protected int portrait;
 
-    /**
-     * 図柄
-     */
+    /** 図柄 */
     protected int design;
 
 
     /**
      * 金額getter
      */
-    public int getAmount() {
+    public Amount getAmount() {
         return this.amount;
     }
 
@@ -79,7 +66,7 @@ public abstract class Currency {
     }
 
     /**
-     * 金額setter
+     * 枚数setter
      */
     public void setHowMany(int howMany) {
         this.howMany = this.howMany + howMany;

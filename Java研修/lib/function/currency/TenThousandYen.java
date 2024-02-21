@@ -1,6 +1,7 @@
 package lib.function.currency;
 
 import static lib.constants.AppConstants.*;
+import lib.constants.Amount;
 
 /**
  * 10000円クラス
@@ -8,13 +9,8 @@ import static lib.constants.AppConstants.*;
 public class TenThousandYen extends Currency {
 
     public TenThousandYen(int howMany, int portrait, int design) {
-
         super(howMany, portrait, design);
-
-        // 通貨金額
-        this.amount = CURRENCY_TEN_THOUSAND_YEN;
-
-        // 通貨種類
+        this.amount = Amount.TenThousandYen;
         this.currencyType = CURRENCY_TYPE_BILL;
     }
 }

@@ -27,9 +27,7 @@ public class Wallet {
         this.currencyList = new ArrayList<Currency>();
     }
 
-    /**
-     * 通貨クラス配列
-     */
+    /** 財布 */
     private List<Currency> currencyList;
 
 
@@ -42,9 +40,17 @@ public class Wallet {
 
     /**
      * Currencyリストsetter
-     * @param currencyType 通貨クラス
+     * @param currencyList 通貨クラスリスト
      */
-    public void setCurrencyList(Currency currency) {
+    public void setCurrencyList(List<Currency> currencyList) {
+        this.currencyList = currencyList;
+    }
+
+    /**
+     * Currency追加処理
+     * @param currency 通貨クラス
+     */
+    public void addCurrencyList(Currency currency) {
         this.currencyList.add(currency);
     }
 
@@ -57,13 +63,13 @@ public class Wallet {
         List<List<Integer>> splitIntlist = splitTextConvert(inputText);
 
         // 通貨情報用クラスに変換
-        List<CurrencyInfo> currencyInfoList = currencyConvert(splitIntlist,0);
+        List<CurrencyInfo> currencyInfoList = currencyConvert(splitIntlist);
 
         // 入金処理
         for (CurrencyInfo currentCurrencyInfo : currencyInfoList) {
 
-            // 通貨の金額を取得
-            int amount = currentCurrencyInfo.getAmount();
+            // 金額を取得
+            int amount = currentCurrencyInfo.getAmount().getAmount();
 
             // 枚数を取得
             int howMany = currentCurrencyInfo.getHowMany();
@@ -74,58 +80,113 @@ public class Wallet {
             // デザインを取得
             int design = currentCurrencyInfo.getDesign();
 
-            boolean kaburinashi = true;
+            // 財布内に同じ金額、肖像の通貨があるか確認
+            boolean isNotEmpty = getCurrencyList().stream().anyMatch(f -> amount == f.getAmount().getAmount() && portrait == f.getPortrait());
 
+            if (isNotEmpty) {
+                // 財布内に存在する場合
 
-            if (kaburinashi) {
-                    // 通貨の金額によって分岐しインスタンス生成する
-                    switch (amount) {
-                        case CURRENCY_ONE_YEN:
-                            setCurrencyList(new OneYen(howMany, portrait, design));
-                            break;
+                // 現在の財布を取得
+                List<Currency> currentCurrencyList = getCurrencyList();
 
-                        case CURRENCY_FIVE_YEN:
-                            setCurrencyList(new FiveYen(howMany, portrait, design));
-                            break;
+                // 返却用
+                List<Currency> resultCurrencyList = new ArrayList<Currency>();
 
-                        case CURRENCY_TEN_YEN:
-                            setCurrencyList(new TenYen(howMany, portrait, design));
-                            break;
+                for (Currency currency : currentCurrencyList) {
 
-                        case CURRENCY_FIFTY_YEN:
-                            setCurrencyList(new FiftyYen(howMany, portrait, design));
-                            break;
+                    // 金額の数値を取得
+                    int currentAmount = currency.getAmount().getAmount();
 
-                        case CURRENCY_ONE_HUNDRED_YEN:
-                            setCurrencyList(new OneHundredYen(howMany, portrait, design));
-                            break;
+                    // 肖像を取得
+                    int currentPortrait = currency.getPortrait();
 
-                        case CURRENCY_FIVE_HUNDRED_YEN:
-                            setCurrencyList(new FiveHundredYen(howMany, portrait, design));
-                            break;
+                    // 枚数を加算
+                    int totalHowMany = howMany + currency.getHowMany();
 
-                        case CURRENCY_ONE_THOUSAND_YEN:
-                            setCurrencyList(new OneThousandYen(howMany, portrait, design));
-                            break;
+                    if (amount == currentAmount && portrait == currentPortrait) {
+                        // 同じ金額、肖像の場合枚数を加算した通貨クラスを生成
 
-                        case CURRENCY_TWO_THOUSAND_YEN:
-                            setCurrencyList(new TwoThousandYen(howMany, portrait, design));
-                            break;
-
-                        case CURRENCY_FIVE_THOUSAND_YEN:
-                            setCurrencyList(new FiveThousandYen(howMany, portrait, design));
-                            break;
-
-                        case CURRENCY_TEN_THOUSAND_YEN:
-                            setCurrencyList(new TenThousandYen(howMany, portrait, design));
-                            break;
-
-                        default:
-                            break;
+                        switch (currentAmount) {
+                            case CURRENCY_ONE_YEN:
+                                resultCurrencyList.add(new OneYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_FIVE_YEN:
+                                resultCurrencyList.add(new FiveYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_TEN_YEN:
+                                resultCurrencyList.add(new TenYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_FIFTY_YEN:
+                                resultCurrencyList.add(new FiftyYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_ONE_HUNDRED_YEN:
+                                resultCurrencyList.add(new OneHundredYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_FIVE_HUNDRED_YEN:
+                                resultCurrencyList.add(new FiveHundredYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_ONE_THOUSAND_YEN:
+                                resultCurrencyList.add(new OneThousandYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_TWO_THOUSAND_YEN:
+                                resultCurrencyList.add(new TwoThousandYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_FIVE_THOUSAND_YEN:
+                                resultCurrencyList.add(new FiveThousandYen(totalHowMany, currentPortrait, design));
+                                break;
+                            case CURRENCY_TEN_THOUSAND_YEN:
+                                resultCurrencyList.add(new TenThousandYen(totalHowMany, currentPortrait, design));
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        resultCurrencyList.add(currency);
                     }
+
+                }
+
+                setCurrencyList(resultCurrencyList);
+            } else {
+                // 財布内に存在しない場合
+
+                switch (amount) {
+                    case CURRENCY_ONE_YEN:
+                        addCurrencyList(new OneYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_FIVE_YEN:
+                        addCurrencyList(new FiveYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_TEN_YEN:
+                        addCurrencyList(new TenYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_FIFTY_YEN:
+                        addCurrencyList(new FiftyYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_ONE_HUNDRED_YEN:
+                        addCurrencyList(new OneHundredYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_FIVE_HUNDRED_YEN:
+                        addCurrencyList(new FiveHundredYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_ONE_THOUSAND_YEN:
+                        addCurrencyList(new OneThousandYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_TWO_THOUSAND_YEN:
+                        addCurrencyList(new TwoThousandYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_FIVE_THOUSAND_YEN:
+                        addCurrencyList(new FiveThousandYen(howMany, portrait, design));
+                        break;
+                    case CURRENCY_TEN_THOUSAND_YEN:
+                        addCurrencyList(new TenThousandYen(howMany, portrait, design));
+                        break;
+                    default:
+                        break;
                 }
             }
         }
+    }
 
     
         

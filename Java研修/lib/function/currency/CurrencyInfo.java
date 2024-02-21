@@ -1,49 +1,37 @@
 package lib.function.currency;
 
+import lib.constants.Amount;
+
 /**
  * 通貨情報クラス
  */
 public class CurrencyInfo {
 
-    public CurrencyInfo(int amount, int howMany, int portrait, int design) {
-        // 金額
+    public CurrencyInfo(Amount amount, int howMany, int portrait, int design) {
         this.amount = amount;
-
-        // 枚数
         this.howMany = howMany;
-        
-        // 肖像
         this.portrait = portrait;
-
-        // 図柄
         this.design = design;
     }
     
-    /**
-     * 金額
-     */
-    private int amount;
 
-    /**
-     * 枚数
-     */
+    /** 金額 */
+    private Amount amount;
+
+    /** 枚数 */
     private int howMany;
-    
-    /**
-     * 肖像
-     */
+
+    /** 肖像 */
     private int portrait;
 
-    /**
-     * 図柄
-     */
+    /** 図柄 */
     private int design;
     
     
     /**
      * 金額getter
      */
-    public int getAmount() {
+    public Amount getAmount() {
         return this.amount;
     }
 
